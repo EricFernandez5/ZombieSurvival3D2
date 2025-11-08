@@ -1,0 +1,18 @@
+# UNITY PROJECT GITIGNORE
+/[Ll]ibrary/
+/[Ll]ogs/
+/[Oo]bj/
+/[Tt]emp/
+/[Bb]uild/
+/[Bb]uilds/
+/UserSettings/
+/MemoryCaptures/
+/Recordings/
+.vs/
+*.csproj
+*.sln
+*.suo
+*.user
+*.unityproj
+.DS_Store
+Thumbs.db
