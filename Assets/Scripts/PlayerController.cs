@@ -17,16 +17,20 @@ public class PlayerController : MonoBehaviour
     public float groundRadius = 0.25f;
     public LayerMask groundMask; // arrastra aquí la capa del suelo si la usas
 
-    CharacterController cc;
-    Vector3 velocity;
-    bool isGrounded;
+    private CharacterController cc;
+    private Vector3 velocity;
+    private bool isGrounded;
+    private Camera cam;
 
     void Awake()
     {
         cc = GetComponent<CharacterController>();
+        cam = Camera.main;
+
+        // Crear GroundCheck si no existe
         if (!groundCheck)
         {
-            var gc = new GameObject("GroundCheck");
+            GameObject gc = new GameObject("GroundCheck");
             gc.transform.SetParent(transform);
             gc.transform.localPosition = new Vector3(0f, 0.1f, 0f);
             groundCheck = gc.transform;
@@ -35,35 +39,44 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // ¿tocando suelo? (usa mask si la asignas; si no, cc.isGrounded)
+        // Comprobar si está tocando el suelo
         if (groundMask.value != 0)
             isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundMask, QueryTriggerInteraction.Ignore);
         else
             isGrounded = cc.isGrounded;
 
-        if (isGrounded && velocity.y < 0f) velocity.y = groundedStick;
+        if (isGrounded && velocity.y < 0f)
+            velocity.y = groundedStick;
 
-        // entrada
+        // Entrada de movimiento
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        Vector3 input = new Vector3(h, 0, v);
+        Vector3 input = new Vector3(h, 0f, v);
         input = Vector3.ClampMagnitude(input, 1f);
 
-        // mover en el espacio del player
-        Vector3 move = transform.TransformDirection(input) * moveSpeed;
+        // Movimiento relativo a la cámara
+        Vector3 camForward = cam ? cam.transform.forward : Vector3.forward;
+        Vector3 camRight = cam ? cam.transform.right : Vector3.right;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
 
-        // salto
+        Vector3 moveDir = (camRight * input.x + camForward * input.z).normalized;
+        Vector3 move = moveDir * moveSpeed;
+
+        // Salto
         if (isGrounded && Input.GetButtonDown("Jump"))
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
-        // gravedad
+        // Aplicar gravedad
         velocity.y += gravity * Time.deltaTime;
 
-        // aplicar movimiento
+        // Aplicar movimiento al CharacterController
         cc.Move((move + velocity) * Time.deltaTime);
 
-        // girar hacia donde camina
-        Vector3 planar = new Vector3(move.x, 0, move.z);
+        // Girar suavemente hacia donde se mueve
+        Vector3 planar = new Vector3(moveDir.x, 0f, moveDir.z);
         if (planar.sqrMagnitude > 0.001f)
         {
             Quaternion target = Quaternion.LookRotation(planar);
