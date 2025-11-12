@@ -9,7 +9,6 @@ public class UiMainMenu : MonoBehaviour
 
     public void Play()
     {
-        // Empieza en el nivel exterior (requisito: nivel aire libre con Terrain)
         SceneManager.LoadScene(levelExteriorScene);
     }
 
@@ -20,10 +19,13 @@ public class UiMainMenu : MonoBehaviour
 
     public void Quit()
     {
-        #if UNITY_EDITOR
+        // Por si vienes de una escena con pausa activada
+        Time.timeScale = 1f;
+
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
         Application.Quit();
-        #endif
+#endif
     }
 }
