@@ -11,6 +11,8 @@ public class ContadorTiempo : MonoBehaviour
 
     float tiempoTranscurrido;
     bool enMarcha = false;
+    public float GetTiempo() => tiempoTranscurrido;
+
 
     void Awake()
     {
