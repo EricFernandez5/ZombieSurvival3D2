@@ -1,74 +1,89 @@
+using System.Collections;
 using UnityEngine;
 
 public class ChestOpener : MonoBehaviour
 {
     [Header("Referencia al texto")]
-    public GameObject pressEText;     // Aquí arrastraremos el texto "Pulsa E para abrir"
+    public GameObject pressEText;
 
-    private bool playerInRange = false;  // ¿Está el jugador cerca del cofre?
-    private bool isOpen = false;         // ¿El cofre ya se ha abierto?
-    private Animation chestAnimation;    // Componente Animation del cofre
+    [Header("Inventario del jugador")]
+    public PlayerInventory playerInventory;
+
+    private bool playerInRange = false;
+    private bool isOpen = false;
+    private bool itemsGiven = false;
+
+    private Animation chestAnimation;
 
     void Start()
     {
-        // Obtenemos el componente Animation del propio cofre
         chestAnimation = GetComponent<Animation>();
 
-        // Aseguramos que el texto empiece oculto
         if (pressEText != null)
-        {
             pressEText.SetActive(false);
-        }
+
+        if (chestAnimation == null)
+            Debug.LogWarning("ChestOpener: no se encontró componente Animation.");
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // Si quien entra en el trigger tiene la tag Player y el cofre aún no está abierto
         if (other.CompareTag("Player") && !isOpen)
         {
             playerInRange = true;
-
             if (pressEText != null)
-            {
-                pressEText.SetActive(true); // Mostrar el texto
-            }
+                pressEText.SetActive(true);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        // Si el jugador sale del trigger
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-
             if (pressEText != null)
-            {
-                pressEText.SetActive(false); // Ocultar el texto
-            }
+                pressEText.SetActive(false);
         }
     }
 
     void Update()
     {
-        // Si el jugador está cerca, el cofre no está abierto y se pulsa E
         if (playerInRange && !isOpen && Input.GetKeyDown(KeyCode.E))
         {
-            isOpen = true; // Marcamos que ya se ha abierto
+            AbrirCofre();
+        }
+    }
 
-            if (pressEText != null)
-            {
-                pressEText.SetActive(false); // Ocultamos el texto al abrir
-            }
+    private void AbrirCofre()
+    {
+        isOpen = true;
 
-            // Reproducimos la animación del cofre
-            if (chestAnimation != null)
-            {
-                // Si el clip se llama exactamente "ChestAnim"
-                chestAnimation.Play("ChestAnim");
-                // Si solo tienes un clip, también valdría:
-                // chestAnimation.Play();
-            }
+        if (pressEText != null)
+            pressEText.SetActive(false);
+
+        if (chestAnimation != null)
+            chestAnimation.Play("ChestAnim");
+
+        StartCoroutine(DarObjetosTrasEspera());
+    }
+
+    private IEnumerator DarObjetosTrasEspera()
+    {
+        yield return new WaitForSeconds(3f);
+        DarObjetosAlJugador();
+    }
+
+    private void DarObjetosAlJugador()
+    {
+        if (itemsGiven) return;
+        itemsGiven = true;
+
+        if (playerInventory != null)
+        {
+            Debug.Log("Cofre: dando PISTOLA y POCIÓN al jugador");
+
+            playerInventory.DarPistola();
+            playerInventory.DarPocion();
         }
     }
 }

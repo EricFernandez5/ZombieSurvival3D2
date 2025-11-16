@@ -9,10 +9,10 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth;
 
     [Header("UI (HUD)")]
-    [SerializeField] Image barraFill;             
-    [SerializeField] TextMeshProUGUI textoBarra;   
+    [SerializeField] Image barraFill;
+    [SerializeField] TextMeshProUGUI textoBarra;
 
-    [Header("Game Over")]
+    [Header("Game Over / Vidas")]
     [SerializeField] GameManager gameManager;
 
     void Awake()
@@ -20,7 +20,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         ActualizarUI();
 
-        if (!gameManager) 
+        if (!gameManager)
             gameManager = FindObjectOfType<GameManager>();
     }
 
@@ -30,21 +30,37 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth = Mathf.Max(0, currentHealth - amount);
 
-        ActualizarUI();  // ← LA BARRA BAJA AQUÍ
+        ActualizarUI();
 
         if (currentHealth == 0)
         {
-            if (gameManager) 
+            if (gameManager)
                 gameManager.OnPlayerDied();
         }
     }
 
+    // Curar vida (para la poción)
+    public void Curar(int amount)
+    {
+        if (currentHealth <= 0) return;
+
+        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        ActualizarUI();
+    }
+
+    // NUEVO: restaurar vida completa al hacer respawn
+    public void RestaurarVidaCompleta()
+    {
+        currentHealth = maxHealth;
+        ActualizarUI();
+    }
+
     void ActualizarUI()
     {
-        // BAJA LA BARRA PROPORCIONALMENTE
-        barraFill.fillAmount = currentHealth / (float)maxHealth;
+        if (barraFill != null)
+            barraFill.fillAmount = currentHealth / (float)maxHealth;
 
-        // ACTUALIZA EL TEXTO (50/100, etc)
-        textoBarra.text = $"{currentHealth}/{maxHealth}";
+        if (textoBarra != null)
+            textoBarra.text = $"{currentHealth}/{maxHealth}";
     }
 }

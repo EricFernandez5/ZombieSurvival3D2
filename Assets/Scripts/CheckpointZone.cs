@@ -17,14 +17,20 @@ public class CheckpointZone : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
+            // Mostrar texto "CHECKPOINT"
             if (popup != null)
             {
-                // Muestra "CHECKPOINT" ~2.5 s (ajusta en el popup)
                 popup.Show("CHECKPOINT");
             }
             else
             {
                 Debug.LogWarning("[CheckpointZone] No hay CheckpointPopup asignado.");
+            }
+
+            // NUEVO: guardar este checkpoint en el GameManager
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.SetCheckpoint(transform);
             }
 
             alreadyShown = true;
