@@ -1119,11 +1119,11 @@ PrefabInstance:
       objectReference: {fileID: 1280620310}
     - target: {fileID: 7608745526521296710, guid: de9ed613d76322f44a71ccb7ecf3ea85, type: 3}
       propertyPath: maxAlive
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7608745526521296710, guid: de9ed613d76322f44a71ccb7ecf3ea85, type: 3}
       propertyPath: spawnInterval
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7608745526521296710, guid: de9ed613d76322f44a71ccb7ecf3ea85, type: 3}
       propertyPath: spawnOnlyIfPlayerInside
@@ -2355,11 +2355,11 @@ PrefabInstance:
       objectReference: {fileID: 1280620310}
     - target: {fileID: 7608745526521296710, guid: de9ed613d76322f44a71ccb7ecf3ea85, type: 3}
       propertyPath: maxAlive
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7608745526521296710, guid: de9ed613d76322f44a71ccb7ecf3ea85, type: 3}
       propertyPath: spawnInterval
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7608745526521296710, guid: de9ed613d76322f44a71ccb7ecf3ea85, type: 3}
       propertyPath: spawnOnlyIfPlayerInside
@@ -2671,11 +2671,11 @@ PrefabInstance:
       objectReference: {fileID: 1280620310}
     - target: {fileID: 7608745526521296710, guid: de9ed613d76322f44a71ccb7ecf3ea85, type: 3}
       propertyPath: maxAlive
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7608745526521296710, guid: de9ed613d76322f44a71ccb7ecf3ea85, type: 3}
       propertyPath: spawnInterval
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
