@@ -26,14 +26,16 @@ public class PointsManager : MonoBehaviour
         }
 
         Instance = this;
-
-        // Si quieres que los puntos NO se pierdan al cambiar de escena,
-        // descomenta la siguiente línea:
-        // DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
+        // Si hay datos guardados, los usamos
+        if (GameDataPersist.Instance != null)
+        {
+            puntos = GameDataPersist.Instance.puntosJugador;
+        }
+
         ActualizarUI();
     }
 

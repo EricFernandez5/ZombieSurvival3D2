@@ -81,6 +81,42 @@ public class ZonaPassarNivel : MonoBehaviour
 
                 if (puntosActuales >= puntosNecesarios)
                 {
+                    // ===============================
+                    // GUARDAR DATOS ANTES DE CAMBIAR
+                    // ===============================
+                    if (GameDataPersist.Instance != null)
+                    {
+                        GameDataPersist data = GameDataPersist.Instance;
+
+                        // Vida del jugador
+                        PlayerHealth health = FindObjectOfType<PlayerHealth>();
+                        if (health != null)
+                        {
+                            data.vidaJugador = health.currentHealth;
+                        }
+
+                        // Puntos
+                        if (PointsManager.Instance != null)
+                        {
+                            data.puntosJugador = PointsManager.Instance.Puntos;
+                        }
+
+                        // Tiempo
+                        ContadorTiempo tiempo = FindObjectOfType<ContadorTiempo>();
+                        if (tiempo != null)
+                        {
+                            data.tiempoJugador = tiempo.GetTiempo();
+                        }
+
+                        // Items (pistola, poción…)
+                        PlayerInventory inventory = FindObjectOfType<PlayerInventory>();
+                        if (inventory != null)
+                        {
+                            data.tienePistola = inventory.TienePistola;
+                            data.tienePocion  = inventory.TienePocion;
+                        }
+                    }
+
                     // Tiene suficientes puntos -> cargar escena
                     SceneManager.LoadScene(nombreEscenaSiguiente);
                 }

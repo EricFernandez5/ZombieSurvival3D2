@@ -32,6 +32,10 @@ public class PlayerInventory : MonoBehaviour
     private int slotSeleccionado = 0;
     public int SlotSeleccionado => slotSeleccionado;
 
+    // NUEVO: getters para que otros scripts sepan qué items tiene
+    public bool TienePistola => tienePistola;
+    public bool TienePocion  => tienePocion;
+
     private void Start()
     {
         playerHealth = GetComponent<PlayerHealth>();
@@ -49,6 +53,16 @@ public class PlayerInventory : MonoBehaviour
         }
 
         OcultarTodo();
+
+        // NUEVO: cargar items ya conseguidos de GameDataPersist (si venimos de otro nivel)
+        if (GameDataPersist.Instance != null)
+        {
+            if (GameDataPersist.Instance.tienePistola)
+                DarPistola();
+
+            if (GameDataPersist.Instance.tienePocion)
+                DarPocion();
+        }
     }
 
     private void Update()

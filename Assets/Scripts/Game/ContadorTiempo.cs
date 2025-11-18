@@ -22,11 +22,18 @@ public class ContadorTiempo : MonoBehaviour
 
     void Start()
     {
-        ActualizarTexto(0f);
+        // Cargar tiempo desde GameDataPersist (si lo hay)
+        if (GameDataPersist.Instance != null)
+        {
+            tiempoTranscurrido = GameDataPersist.Instance.tiempoJugador;
+        }
+
+        ActualizarTexto(tiempoTranscurrido);
+
         if (iniciarAlComenzar)
         {
             Time.timeScale = 1f;     // por si la escena entra pausada
-            IniciarContador();
+            enMarcha = true;
         }
     }
 

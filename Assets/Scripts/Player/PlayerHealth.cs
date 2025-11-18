@@ -24,6 +24,15 @@ public class PlayerHealth : MonoBehaviour
             gameManager = FindObjectOfType<GameManager>();
     }
 
+    void Start()
+    {
+        // Si hay datos guardados de otro nivel, los aplicamos
+        if (GameDataPersist.Instance != null)
+        {
+            SetHealth(GameDataPersist.Instance.vidaJugador);
+        }
+    }
+
     public void TakeDamage(int amount)
     {
         if (currentHealth <= 0) return;
@@ -48,10 +57,17 @@ public class PlayerHealth : MonoBehaviour
         ActualizarUI();
     }
 
-    // NUEVO: restaurar vida completa al hacer respawn
+    // Restaurar vida completa al hacer respawn
     public void RestaurarVidaCompleta()
     {
         currentHealth = maxHealth;
+        ActualizarUI();
+    }
+
+    // NUEVO: para poder ponerle una vida concreta (por ejemplo la guardada)
+    public void SetHealth(int amount)
+    {
+        currentHealth = Mathf.Clamp(amount, 0, maxHealth);
         ActualizarUI();
     }
 

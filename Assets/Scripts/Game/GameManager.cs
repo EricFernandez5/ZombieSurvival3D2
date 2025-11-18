@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;   // <-- AÑADIDO
 
 public class GameManager : MonoBehaviour
 {
@@ -108,6 +109,14 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // ============================
+        // Saber en qué escena estamos
+        // ============================
+        string escenaActual = SceneManager.GetActiveScene().name;
+
+        // Nombre EXACTO de tu escena de nivel 2
+        const string NOMBRE_NIVEL_2 = "Level2_Interior";
+
         // Elegir posición de respawn: checkpoint si existe, si no, spawn inicial
         Vector3 destinoPos = spawnInicialPos;
         Quaternion destinoRot = spawnInicialRot;
@@ -118,7 +127,7 @@ public class GameManager : MonoBehaviour
             destinoRot = currentCheckpoint.rotation;
         }
 
-        // Si el jugador tiene CharacterController, hay que desactivarlo para teletransportar
+        // Teletransportar al jugador
         var cc = player.GetComponent<CharacterController>();
         if (cc != null)
         {
@@ -140,11 +149,24 @@ public class GameManager : MonoBehaviour
             ph.RestaurarVidaCompleta();
         }
 
-        // Quitar todos los objetos del inventario
+        // ==========================================
+        // INVENTARIO:
+        // - En Level2_Interior -> NO se resetea
+        // - En el resto de escenas -> SÍ se resetea
+        // ==========================================
         var inv = player.GetComponent<PlayerInventory>();
         if (inv != null)
         {
-            inv.ResetInventory();
+            if (escenaActual == NOMBRE_NIVEL_2)
+            {
+                // Estamos en el nivel 2 → mantener items
+                Debug.Log("Respawn en nivel 2 (Level2_Interior): se mantiene el inventario.");
+            }
+            else
+            {
+                // Nivel 1 u otro → perder items como antes
+                inv.ResetInventory();
+            }
         }
 
         // Asegurarnos de que el juego sigue corriendo
