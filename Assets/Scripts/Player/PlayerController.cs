@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     public float groundRadius = 0.25f;
     public LayerMask groundMask; // arrastra aquí la capa del suelo si la usas
 
+    [Header("Animación")]
+    public Animator animator;                 // Animator del personaje (con Speed y Jump)
+    public float animationDampTime = 0.1f;    // Suavizado del cambio de velocidad en la animación
+
     private CharacterController cc;
     private Vector3 velocity;
     private bool isGrounded;
@@ -34,6 +38,12 @@ public class PlayerController : MonoBehaviour
             gc.transform.SetParent(transform);
             gc.transform.localPosition = new Vector3(0f, 0.1f, 0f);
             groundCheck = gc.transform;
+        }
+
+        // Buscar automáticamente el Animator en los hijos si no se ha asignado
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
         }
     }
 
@@ -67,7 +77,16 @@ public class PlayerController : MonoBehaviour
 
         // Salto
         if (isGrounded && Input.GetButtonDown("Jump"))
+        {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+            // Disparar animación de salto
+            if (animator != null)
+            {
+                animator.ResetTrigger("Jump"); // por si acaso
+                animator.SetTrigger("Jump");
+            }
+        }
 
         // Aplicar gravedad
         velocity.y += gravity * Time.deltaTime;
@@ -81,6 +100,21 @@ public class PlayerController : MonoBehaviour
         {
             Quaternion target = Quaternion.LookRotation(planar);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.deltaTime);
+        }
+
+        // === ACTUALIZAR ANIMACIONES ===
+        if (animator != null)
+        {
+            // Velocidad horizontal real del CharacterController
+            Vector3 horizontalVelocity = cc.velocity;
+            horizontalVelocity.y = 0f;
+            float speed = horizontalVelocity.magnitude;
+
+            // Normalizamos la velocidad (0 = parado, 1 = a moveSpeed)
+            float normalizedSpeed = moveSpeed > 0f ? Mathf.Clamp01(speed / moveSpeed) : 0f;
+
+            // Mandamos el valor al parámetro "Speed" del Animator
+            animator.SetFloat("Speed", normalizedSpeed, animationDampTime, Time.deltaTime);
         }
     }
 

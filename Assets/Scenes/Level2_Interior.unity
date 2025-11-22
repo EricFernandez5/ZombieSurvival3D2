@@ -263,6 +263,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1382273581079937595, guid: 83a23a9cc44add549944f3a31af1765b, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 87d1d5cc393dc004a9a18663a271f17f, type: 3}
     - target: {fileID: 2222311378316901557, guid: 83a23a9cc44add549944f3a31af1765b, type: 3}
       propertyPath: m_Name
       value: MusicaNivel2
@@ -312,6 +316,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83a23a9cc44add549944f3a31af1765b, type: 3}
+--- !u!82 &141335209 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1382273581079937595, guid: 83a23a9cc44add549944f3a31af1765b, type: 3}
+  m_PrefabInstance: {fileID: 141335208}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &168847983
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,6 +566,10 @@ PrefabInstance:
       propertyPath: vidasTexto
       value: 
       objectReference: {fileID: 1917554510}
+    - target: {fileID: 8589858232315186576, guid: 699717e6334d3a94aa4af2a820845886, type: 3}
+      propertyPath: musicaNivel
+      value: 
+      objectReference: {fileID: 141335209}
     - target: {fileID: 8589858232315186576, guid: 699717e6334d3a94aa4af2a820845886, type: 3}
       propertyPath: gameOverTime
       value: 
