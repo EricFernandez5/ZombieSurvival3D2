@@ -18,5 +18,5 @@ El codi complet del projecte de Unity es troba al següent enllaç de Google Dri
 
 Executables per a:
 
-- **Windows**: `[[Enllaç a l’executable (GitHub o Drive)]](https://drive.google.com/drive/folders/1jZEJbq_8scCmheV8s0UYcZnJYGVv1-mo?usp=sharing)`
-- **Linux**: `[[Enllaç a l’executable (GitHub o Drive)]](https://drive.google.com/drive/folders/1jZEJbq_8scCmheV8s0UYcZnJYGVv1-mo?usp=sharing)`
+- **Windows**: `(https://drive.google.com/drive/folders/1jZEJbq_8scCmheV8s0UYcZnJYGVv1-mo?usp=sharing)`
+- **Linux**: `(https://drive.google.com/drive/folders/1jZEJbq_8scCmheV8s0UYcZnJYGVv1-mo?usp=sharing)`
