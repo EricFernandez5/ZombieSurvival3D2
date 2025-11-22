@@ -6,7 +6,7 @@ Projecte del mòdul M8 UF3 – Joc 3D amb Unity.
 
 La documentació completa del joc es troba al fitxer:
 
-- [`Docs/GDD_ZombieSurvival3D.pdf`](Docs/GDD_ZombieSurvival3D.pdf)
+- [`Docs/GDD_ZombieSurvival3D.pdf`](Documentacio_ZombieSurvival3D.pdf)
 
 ## Codi complet del projecte
 
