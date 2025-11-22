@@ -33,7 +33,7 @@ textoTiempoFinal.text = "Tiempo final: " + textoTiempoHUD.text;
 
 // Copiar puntos desde el HUD
 if (textoPuntosFinales != null && textoPuntosHUD != null)
-textoPuntosFinales.text = "Puntos finales: " + textoPuntosHUD.text;
+textoPuntosFinales.text = "Puntos finals: " + textoPuntosHUD.text;
 
 // Pausar juego
 Time.timeScale = 0f;
